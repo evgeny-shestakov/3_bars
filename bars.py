@@ -17,37 +17,18 @@ def load_jsonfile(filepath):
 
 
 def get_biggest_bar(json_input):
-    big_bar = None
-    for bar in json_input:
-        if (big_bar is None or
-            bar['SeatsCount'] > big_bar['SeatsCount']):
-            big_bar = bar
-    
-    return big_bar
+    return max(json_input, key=lambda bar: bar['SeatsCount'])
     
     
 def get_smallest_bar(json_input):
-    small_bar = None
-    for bar in json_input:
-        if (small_bar is None or
-            (bar['SeatsCount'] < small_bar['SeatsCount']
-                and bar['SeatsCount'] > 0)):
-            small_bar = bar
-    
-    return small_bar
-
+    return min(filter(lambda bar: bar['SeatsCount'] > 0, json_input),
+               key=lambda bar: bar['SeatsCount'])
+               
 
 def get_closest_bar(json_input, longitude, latitude):
-    closest_bar = None
-    min_distance  = 0
-    for bar in json_input:
-        distance = sqrt((longitude - float(bar['Longitude_WGS84']))**2 + 
-                        (latitude - float(bar['Latitude_WGS84']))**2)
-        if (closest_bar is None or
-            distance < min_distance):
-            closest_bar = bar
-            min_distance = distance
-    return closest_bar
+    return min(json_input, key=lambda bar: sqrt(
+                    (longitude - float(bar['Longitude_WGS84']))**2 + 
+                    (latitude - float(bar['Latitude_WGS84']))**2))
 
 
 def print_bar(bar, type):
