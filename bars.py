@@ -30,7 +30,8 @@ def get_smallest_bar(json_input):
     small_bar = None
     for bar in json_input:
         if (small_bar is None or
-            bar['SeatsCount'] < small_bar['SeatsCount']):
+            (bar['SeatsCount'] < small_bar['SeatsCount']
+                and bar['SeatsCount'] > 0)):
             small_bar = bar
     
     return small_bar
