@@ -24,8 +24,8 @@ def get_biggest_bar(json_input):
             big_bar = bar
     
     return big_bar
-
-
+    
+    
 def get_smallest_bar(json_input):
     small_bar = None
     for bar in json_input:
@@ -50,6 +50,28 @@ def get_closest_bar(json_input, longitude, latitude):
     return closest_bar
 
 
+def print_bar(bar, type):
+    print('{0} bar is: "{1}" with ID: {2}, seats: {3}'
+          .format(type, bar['Name'], bar['ID'],
+                  str(bar['SeatsCount'])))
+                  
+                  
+def print_bars_info(json_input):
+    print_bar(get_biggest_bar(json_input), 'Biggest')
+    print_bar(get_smallest_bar(json_input), 'Smallest') 
+
+    try:
+        closest_bar = get_closest_bar(json_input, float(sys.argv[2]),
+                                      float(sys.argv[3]))
+        print_bar(closest_bar, 'Nearest')
+
+    except (IndexError, ValueError):
+        print('warning: please add valid longitude latitude'
+              'as arguments for calculate nearest bar, like:' +
+              './python bars.py data.json longitude latitude')
+
+                  
+                  
 if __name__ == '__main__':
     json_input = None;
     
@@ -60,21 +82,5 @@ if __name__ == '__main__':
             'python pprint_json.py data.json')
             
     if json_input is not None:
-        biggest_bar = get_biggest_bar(json_input)
-        smallest_bar = get_smallest_bar(json_input)
-        print('Biggest bar is: "{0}" with ID: {1}, seats: {2}'
-            .format(biggest_bar['Name'], biggest_bar['ID'],
-                    str(biggest_bar['SeatsCount'])))
-        print('Smallest bar is: "{0}", with ID: {1}, seats: {2}'
-            .format(smallest_bar['Name'], smallest_bar['ID'],
-                    str(smallest_bar['SeatsCount'])))
-        try:
-            closest_bar = get_closest_bar(json_input, float(sys.argv[2]),
-                                          float(sys.argv[3]))
-            print('Nearest bar is: "{0}" with ID: {1}, seats: {2}'
-                  .format(closest_bar['Name'], closest_bar['ID'],
-                          str(closest_bar['SeatsCount'])))
-        except (IndexError, ValueError):
-            print('warning: please add valid longitude latitude'
-                 'as arguments, like:' +
-                 'python bars.py data.json longitude latitude')
+        print_bars_info(json_input)
+                 
