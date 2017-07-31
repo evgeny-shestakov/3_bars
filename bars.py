@@ -38,23 +38,29 @@ def print_bar(bar, type):
                   
                   
 def print_bars_info(bars):
-    for bar, type in bars:
-        print_bar(bar, type)
+    for bar, bar_type in bars:
+        print_bar(bar, bar_type)
                   
                   
 if __name__ == '__main__':
     
-    try: 
+    if len(sys.argv) > 1:
         json_input = load_jsonfile(sys.argv[1])
-        longitude = float(sys.argv[2])
-        latitude = float(sys.argv[3]) 
-    except IndexError:
-        print('warning: please add valid json file as 1-st argument:'+ 
-            ' ./python pprint_json.py data.json longitude latitude')
-    else:
+        if json_input is None:
+            sys.exit(1)
         bars = [(get_biggest_bar(json_input), 'Biggest'),
-            (get_smallest_bar(json_input), 'Smallest'),
-            (get_closest_bar(json_input, longitude, latitude),
-                'Nearest')]
+                (get_smallest_bar(json_input), 'Smallest')]
+        if len(sys.argv) > 3:
+            bars.append((get_closest_bar(json_input, 
+                                        float(sys.argv[2]),
+                                        float(sys.argv[3])),
+                        'Nearest'))
+        else:
+            print('for calculating nearest bar: add 2-st argument and 3-st '+ 
+            'argumets: ./python pprint_json.py data.json longitude latitude')
         print_bars_info(bars)
-                 
+        sys.exit(0)
+    else:
+        print('error: please add valid json file as 1-st argument:'+ 
+            ' ./python pprint_json.py data.json longitude latitude')
+        sys.exit(1)
