@@ -51,10 +51,10 @@ if __name__ == '__main__':
         bars = [(get_biggest_bar(json_input), 'Biggest'),
                 (get_smallest_bar(json_input), 'Smallest')]
         if len(sys.argv) > 3:
-            bars.append((get_closest_bar(json_input, 
+            closest_bar = get_closest_bar(json_input, 
                                         float(sys.argv[2]),
-                                        float(sys.argv[3])),
-                        'Nearest'))
+                                        float(sys.argv[3]))
+            bars.append((closest_bar, 'Nearest'))
         else:
             print('for calculating nearest bar: add 2-st argument and 3-st '+ 
             'argumets: ./python pprint_json.py data.json longitude latitude')
