@@ -31,15 +31,15 @@ def get_closest_bar(json_input, longitude, latitude):
                     (latitude - float(bar['Latitude_WGS84']))**2))
 
 
-def print_bar(bar, bar_type):
+def print_bar(bar, bar_feature):
     print('{0} bar is: "{1}" with ID: {2}, seats: {3}'
-          .format(bar_type, bar['Name'], bar['ID'],
+          .format(bar_feature, bar['Name'], bar['ID'],
                   str(bar['SeatsCount'])))
                   
                   
 def print_bars_info(bars):
-    for bar, bar_type in bars:
-        print_bar(bar, bar_type)
+    for bar, bar_feature in bars:
+        print_bar(bar, bar_feature)
                   
                   
 if __name__ == '__main__':
